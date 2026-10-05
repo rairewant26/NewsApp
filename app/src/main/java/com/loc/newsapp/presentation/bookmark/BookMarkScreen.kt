@@ -40,6 +40,7 @@ fun BookmarkScreen(
         Spacer(modifier = Modifier.height(mediumpadding1))
 
         ArticlesList(
+            modifier = Modifier.padding(horizontal = mediumpadding1),
             articles = state.articles,
             onClick = navigateToDetails
         )

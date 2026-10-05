@@ -28,11 +28,19 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-import kotlin.io.encoding.Base64
+import com.loc.newsapp.domain.usecases.news.SelectArticle
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(
+        database: NewsDatabase
+    ): NewsDao {
+        return database.newsDao()
+    }
 
     @Provides
     @Singleton
@@ -77,7 +85,8 @@ object AppModule {
             searchNews = SearchNews(newsRepository),
             upsertNews = UpsertArticle(newsDao),
             deleteArticle = DeleteArticle(newsDao),
-            selectArticles = SelectArticles(newsDao)
+            selectArticles = SelectArticles(newsDao),
+            selectArticle = SelectArticle(newsDao)
         )
     }
 

@@ -1,10 +1,10 @@
 package com.loc.newsapp.presentation.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -24,13 +24,16 @@ import com.loc.newsapp.R
 import com.loc.newsapp.domain.model.Article
 import com.loc.newsapp.presentation.common.ArticlesList
 import com.loc.newsapp.presentation.common.SearchBar
-import com.loc.newsapp.presentation.common.searchBar
 import com.loc.newsapp.presentation.common.shimmerEffect
 import com.loc.newsapp.presentation.navgraph.Route
 import com.loc.newsapp.presentation.onboarding.composable.Dimensions.mediumpadding1
 
 @Composable
-fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
+fun HomeScreen(
+    articles: LazyPagingItems<Article>,
+    navigateToSearch: () -> Unit,
+    navigateToDetails: (Article) -> Unit
+) {
     val titles by remember {
         derivedStateOf {
             if (articles.itemCount > 10){
@@ -64,9 +67,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
             text = "",
             readOnly = true,
             onValueChange = {},
-            onClick = {
-                navigate(Route.SearchScreen.route)
-            },
+            onClick = navigateToSearch,
             onSearch = {}
         )
 
@@ -75,7 +76,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
         Text(
             text = titles,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(start = mediumpadding1),
             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
             color = colorResource(id = R.color.placeholder)
@@ -86,9 +87,7 @@ fun HomeScreen(articles: LazyPagingItems<Article>, navigate: (String) -> Unit) {
         ArticlesList(
             modifier = Modifier.padding(horizontal = mediumpadding1),
             articles = articles,
-            onClick = {
-                navigate(Route.DetailsScreen.route)
-            }
+            onClick = navigateToDetails
         )
     }
 }

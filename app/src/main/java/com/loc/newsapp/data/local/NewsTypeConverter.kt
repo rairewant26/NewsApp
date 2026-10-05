@@ -3,7 +3,6 @@ package com.loc.newsapp.data.local
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.loc.newsapp.domain.model.Source
-import okio.`-DeprecatedOkio`.source
 
 @ProvidedTypeConverter
 class NewsTypeConverter {

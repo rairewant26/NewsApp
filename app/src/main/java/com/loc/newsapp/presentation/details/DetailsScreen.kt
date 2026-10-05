@@ -28,12 +28,15 @@ import com.loc.newsapp.presentation.details.components.DetailsTopBar
 import com.loc.newsapp.presentation.onboarding.composable.Dimensions.ArticleImageHeight
 import com.loc.newsapp.presentation.onboarding.composable.Dimensions.mediumpadding1
 import com.loc.newsapp.ui.theme.NewsAppTheme
+import com.loc.newsapp.util.UIComponent
+
 
 @Composable
 fun DetailsScreen(
     article: Article,
     event: (DetailsEvent) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    sideEffect: UIComponent?
 ) {
     val context = LocalContext.current
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding()) {
@@ -56,7 +59,7 @@ fun DetailsScreen(
                 }
             },
             onBookMarkClick = {
-                event(DetailsEvent.SaveArticle)
+                event(DetailsEvent.UpsertDeleteArticle(article))
             },
             onBackClick = navigateUp
         )
@@ -117,9 +120,9 @@ fun DetailsScreenPreview() {
                 url = "https://consent.google.com/ml?continue=https://news.google.com/rss/articles/CBMiaWh0dHBzOi8vY3J5cHRvc2F1cnVzLnRlY2gvY29pbmJhc2Utc2F5cy1hcHBsZS1ibG9ja2VkLWl0cy1sYXN0LWFwcC1yZWxlYXNlLW9uLW5mdHMtaW4td2FsbGV0LXJldXRlcnMtY29tL9IBAA?oc%3D5&gl=FR&hl=en-US&cm=2&pc=n&src=1",
                 urlToImage = "https://media.wired.com/photos/6495d5e893ba5cd8bbdc95af/191:100/w_1280,c_limit/The-EU-Rules-Phone-Batteries-Must-Be-Replaceable-Gear-2BE6PRN.jpg"
             ),
-            event = {}
-        ) {
-
-        }
+            event = {},
+            navigateUp = {},
+            sideEffect = null
+        )
     }
 }
